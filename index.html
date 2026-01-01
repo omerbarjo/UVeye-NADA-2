@@ -153,6 +153,15 @@
             padding-left: 30px;
         }
 
+        .cost-row.promo-price.large {
+            font-size: 32px;
+            padding-top: 15px;
+        }
+
+        .cost-row.promo-price.medium {
+            font-size: 24px;
+        }
+
         .cost-row.free-month {
             color: #00ff00;
             font-weight: 600;
@@ -425,16 +434,20 @@
                 <span>Kiosk Add-On:</span>
                 <span id="kioskCost">$0</span>
             </div>
-            <div class="cost-row total">
+            <div class="cost-row total" id="monthlyTotalRow">
                 <span>Total Monthly:</span>
                 <span id="monthlyTotal">$6,300</span>
+            </div>
+            <div class="cost-row promo-price large" id="monthlyTotalPromoRow" style="display: none;">
+                <span>NADA Promo - Total Monthly:</span>
+                <span id="monthlyTotalPromo">$6,000</span>
             </div>
             <div class="cost-row subtotal" id="installTotalRow">
                 <span id="installLabel">One-Time Installation:</span>
                 <span id="installTotal">$10,500</span>
             </div>
-            <div class="cost-row promo-price" id="installPromoRow" style="display: none;">
-                <span>NADA Promo Price - One Time Installation:</span>
+            <div class="cost-row promo-price medium" id="installPromoRow" style="display: none;">
+                <span id="installPromoLabel">NADA Promo - Total One Time Installation:</span>
                 <span id="installPromo">$3,000</span>
             </div>
         </div>
@@ -509,7 +522,8 @@
             // Calculate costs
             const systemCost = scanPrice * units;
             const systemCostPromo = finalScanPrice * units;
-            const monthlyTotal = systemCostPromo + merchandising + apollo + kiosk;
+            const monthlyTotal = (scanPrice * units) + merchandising + apollo + kiosk;
+            const monthlyTotalPromo = systemCostPromo + merchandising + apollo + kiosk;
             const installTotal = (installation * units) + kioskOnetime;
             const installTotalPromo = (finalInstallation * units) + kioskOnetime;
 
@@ -526,6 +540,7 @@
             document.getElementById('apolloCost').textContent = formatCurrency(apollo);
             document.getElementById('kioskCost').textContent = formatCurrency(kiosk);
             document.getElementById('monthlyTotal').textContent = formatCurrency(monthlyTotal);
+            document.getElementById('monthlyTotalPromo').textContent = formatCurrency(monthlyTotalPromo);
             document.getElementById('installTotal').textContent = formatCurrency(installTotal);
             document.getElementById('installPromo').textContent = formatCurrency(installTotalPromo);
             document.getElementById('totalSavings').textContent = formatCurrency(totalSavings);
@@ -535,6 +550,8 @@
                 document.getElementById('systemCostRow').classList.add('strikethrough');
                 document.getElementById('systemCostPromoRow').style.display = 'flex';
                 document.getElementById('freeMonthRow').style.display = 'flex';
+                document.getElementById('monthlyTotalRow').classList.add('strikethrough');
+                document.getElementById('monthlyTotalPromoRow').style.display = 'flex';
                 document.getElementById('installTotalRow').classList.add('strikethrough');
                 document.getElementById('installPromoRow').style.display = 'flex';
                 document.getElementById('savingsBox').style.display = 'block';
@@ -542,6 +559,8 @@
                 document.getElementById('systemCostRow').classList.remove('strikethrough');
                 document.getElementById('systemCostPromoRow').style.display = 'none';
                 document.getElementById('freeMonthRow').style.display = 'none';
+                document.getElementById('monthlyTotalRow').classList.remove('strikethrough');
+                document.getElementById('monthlyTotalPromoRow').style.display = 'none';
                 document.getElementById('installTotalRow').classList.remove('strikethrough');
                 document.getElementById('installPromoRow').style.display = 'none';
                 document.getElementById('savingsBox').style.display = 'none';
@@ -551,6 +570,10 @@
             document.getElementById('installLabel').textContent = document.getElementById('kiosk').checked 
                 ? 'One-Time Installation+Kiosk:' 
                 : 'One-Time Installation:';
+            
+            document.getElementById('installPromoLabel').textContent = document.getElementById('kiosk').checked 
+                ? 'NADA Promo - Total One Time Installation+Kiosk:' 
+                : 'NADA Promo - Total One Time Installation:';
         }
 
         // Add event listeners
