@@ -650,10 +650,13 @@
             doc.text(document.getElementById('systemCost').textContent, 180, yPos, { align: 'right' });
             
             if (promoActive) {
+                // Add strikethrough line
+                const textWidth = doc.getTextWidth(document.getElementById('systemCost').textContent);
+                doc.setDrawColor(0, 0, 0);
+                doc.setLineWidth(0.5);
+                doc.line(180 - textWidth, yPos - 1, 180, yPos - 1);
+                
                 yPos += 7;
-                doc.setTextColor(100, 100, 100);
-                doc.line(180, yPos - 5, 200, yPos - 5);
-                yPos += 3;
                 doc.setTextColor(0, 200, 0);
                 doc.setFont(undefined, 'bold');
                 doc.text('NADA Promo Price - Monthly System Cost:', 30, yPos);
@@ -694,6 +697,12 @@
             doc.text(document.getElementById('monthlyTotal').textContent, 180, yPos, { align: 'right' });
             
             if (promoActive) {
+                // Add strikethrough line
+                const textWidth = doc.getTextWidth(document.getElementById('monthlyTotal').textContent);
+                doc.setDrawColor(0, 0, 0);
+                doc.setLineWidth(0.7);
+                doc.line(180 - textWidth, yPos - 2, 180, yPos - 2);
+                
                 yPos += 10;
                 doc.setTextColor(0, 200, 0);
                 doc.text('NADA Promo - Total Monthly:', 30, yPos);
@@ -708,6 +717,12 @@
             doc.text(document.getElementById('installTotal').textContent, 180, yPos, { align: 'right' });
             
             if (promoActive) {
+                // Add strikethrough line
+                const textWidth = doc.getTextWidth(document.getElementById('installTotal').textContent);
+                doc.setDrawColor(0, 0, 0);
+                doc.setLineWidth(0.6);
+                doc.line(180 - textWidth, yPos - 1.5, 180, yPos - 1.5);
+                
                 yPos += 10;
                 doc.setTextColor(0, 200, 0);
                 doc.text(document.getElementById('installPromoLabel').textContent, 30, yPos);
